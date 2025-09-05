@@ -1,7 +1,8 @@
 import { defineChain } from "viem";
 import { arbitrum, arbitrumSepolia, arbitrumNova, eduChainTestnet, eduChain, superposition } from "viem/chains";
 
-const RPC_URL = process.env.NEXT_PUBLIC_RPC_URL || "http://localhost:8547";
+const RPC_URL = process.env.NEXT_PUBLIC_RPC_URL || "https://test.kimiru.ai";
+console.log("RPC_URL----------", RPC_URL);
 
 const arbitrumNitro = defineChain({
   id: 412346,
