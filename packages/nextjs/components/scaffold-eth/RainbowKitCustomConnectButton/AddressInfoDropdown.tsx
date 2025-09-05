@@ -11,6 +11,7 @@ import {
   DocumentDuplicateIcon,
   QrCodeIcon,
   UserCircleIcon,
+  PlusIcon,
 } from "@heroicons/react/24/outline";
 import { BlockieAvatar, isENS } from "~~/components/scaffold-eth";
 import { useCopyToClipboard, useOutsideClick } from "~~/hooks/scaffold-eth";
@@ -24,9 +25,16 @@ type AddressInfoDropdownProps = {
   displayName: string;
   ensAvatar?: string;
   onSwitchAccount: () => void;
+  onMultiWalletConnect?: () => void;
 };
 
-export const AddressInfoDropdown = ({ address, ensAvatar, displayName, onSwitchAccount }: AddressInfoDropdownProps) => {
+export const AddressInfoDropdown = ({
+  address,
+  ensAvatar,
+  displayName,
+  onSwitchAccount,
+  onMultiWalletConnect,
+}: AddressInfoDropdownProps) => {
   const { disconnect } = useDisconnect();
   const checkSumAddress = getAddress(address);
 
@@ -78,17 +86,19 @@ export const AddressInfoDropdown = ({ address, ensAvatar, displayName, onSwitchA
               )}
             </div>
           </li>
-          <li className={selectingNetwork ? "hidden" : ""}>
-            <label htmlFor="qrcode-modal" className="h-8 btn-sm rounded-xl! flex gap-3 py-3">
-              <QrCodeIcon className="h-6 w-4 ml-2 sm:ml-0" />
-              <span className="whitespace-nowrap">View QR Code</span>
-            </label>
-          </li>
           {allowedNetworks.some(network => network.id === arbitrumNitro.id) && (
             <li className={selectingNetwork ? "hidden" : ""}>
               <button className="menu-item btn-sm !rounded-xl flex gap-3 py-3" type="button" onClick={onSwitchAccount}>
                 <UserCircleIcon className="h-6 w-4 ml-2 sm:ml-0" />
                 <span className="whitespace-nowrap">Switch account</span>
+              </button>
+            </li>
+          )}
+          {onMultiWalletConnect && (
+            <li className={selectingNetwork ? "hidden" : ""}>
+              <button className="menu-item btn-sm !rounded-xl flex gap-3 py-3" type="button" onClick={onMultiWalletConnect}>
+                <PlusIcon className="h-6 w-4 ml-2 sm:ml-0" />
+                <span className="whitespace-nowrap">Multi Wallet Connect</span>
               </button>
             </li>
           )}

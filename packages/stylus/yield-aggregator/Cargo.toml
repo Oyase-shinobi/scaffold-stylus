@@ -1,0 +1,25 @@
+[package]
+name = "yield-aggregator"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+stylus-sdk = "0.6.1"
+openzeppelin-stylus = "0.6.1"
+hex = "0.4"
+
+[lib]
+crate-type = ["cdylib"]
+
+[features]
+export-abi = ["stylus-sdk/export-abi"]
+
+[profile.release]
+opt-level = 3
+debug = false
+strip = true
+debug-assertions = false
+overflow-checks = false
+lto = true
+codegen-units = 1
+panic = "abort"

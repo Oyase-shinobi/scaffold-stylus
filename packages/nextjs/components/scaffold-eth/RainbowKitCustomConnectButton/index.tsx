@@ -1,11 +1,11 @@
 "use client";
 
-// @refresh reset
 import { useState } from "react";
 import { Balance } from "../Balance";
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
 import { AddressQRCodeModal } from "./AddressQRCodeModal";
 import { BurnerWalletModal } from "./BurnerWalletModal";
+import { MultiWalletModal } from "./MultiWalletModal";
 import { WrongNetworkDropdown } from "./WrongNetworkDropdown";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Address } from "viem";
@@ -13,14 +13,14 @@ import { useNetworkColor } from "~~/hooks/scaffold-eth";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
 import { saveBurnerPK } from "~~/utils/scaffold-stylus/burner";
 import { arbitrumNitro } from "~~/utils/scaffold-stylus/supportedChains";
+import { useMultiWallet } from "~~/hooks/useMultiWallet";
 
-/**
- * Custom Wagmi Connect Button (watch balance + custom design)
- */
 export const RainbowKitCustomConnectButton = () => {
   const networkColor = useNetworkColor();
   const { targetNetwork } = useTargetNetwork();
   const [isBurnerModalOpen, setIsBurnerModalOpen] = useState(false);
+  const [isMultiWalletModalOpen, setIsMultiWalletModalOpen] = useState(false);
+  const { updateWallets } = useMultiWallet();
 
   const handleBurnerWalletSelect = async (privateKey: string) => {
     saveBurnerPK({ privateKey: privateKey as `0x${string}` });
@@ -69,6 +69,7 @@ export const RainbowKitCustomConnectButton = () => {
                       displayName={account.displayName}
                       ensAvatar={account.ensAvatar}
                       onSwitchAccount={() => setIsBurnerModalOpen(true)}
+                      onMultiWalletConnect={() => setIsMultiWalletModalOpen(true)}
                     />
                     <AddressQRCodeModal address={account.address as Address} modalId="qrcode-modal" />
                   </>
@@ -83,6 +84,11 @@ export const RainbowKitCustomConnectButton = () => {
         isOpen={isBurnerModalOpen}
         onClose={() => setIsBurnerModalOpen(false)}
         onSelectAccount={handleBurnerWalletSelect}
+      />
+      <MultiWalletModal
+        isOpen={isMultiWalletModalOpen}
+        onClose={() => setIsMultiWalletModalOpen(false)}
+        onWalletsChange={updateWallets}
       />
     </>
   );

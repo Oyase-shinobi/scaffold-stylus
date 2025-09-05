@@ -36,6 +36,13 @@ export default async function deployScript(deployOptions: DeployOptions) {
     ...deployOptions,
   });
 
+  // Deploy YieldAggregator contract
+  await deployStylusContract({
+    contract: "yield-aggregator",
+    constructorArgs: [config.deployerAddress!],
+    ...deployOptions,
+  });
+
   // EXAMPLE: Deploy to Orbit Chains, uncomment to try
   // await deployStylusContract({
   //   contract: "counter",
