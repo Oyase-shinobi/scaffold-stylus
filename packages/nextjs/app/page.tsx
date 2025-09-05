@@ -68,6 +68,14 @@ const Home: NextPage = () => {
           }}
         >
           <div className="flex justify-center items-center h-full gap-12 flex-col sm:flex-row">
+            {/* Yield Tracker Card */}
+            <Card
+              icon={<span className="text-4xl">📊</span>}
+              description={<>Track your DeFi positions across multiple protocols with the</>}
+              linkHref="/yield-tracker"
+              linkText="Yield Tracker"
+              isDarkMode={isDarkMode}
+            />
             {/* Debug Contracts Card */}
             <Card
               icon={isDarkMode ? <DarkBugAntIcon /> : <LightBugAntIcon />}
