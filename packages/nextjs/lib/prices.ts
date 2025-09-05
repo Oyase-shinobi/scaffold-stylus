@@ -54,8 +54,9 @@ export async function getTokenPrice(tokenAddress: `0x${string}`): Promise<PriceD
       }),
     ]);
 
-    const price = Number(roundData.answer) / Math.pow(10, decimals);
-    const updatedAt = Number(roundData.updatedAt) * 1000; // Convert to milliseconds
+    // roundData is a tuple: [roundId, answer, startedAt, updatedAt, answeredInRound]
+    const price = Number(roundData[1]) / Math.pow(10, decimals);
+    const updatedAt = Number(roundData[3]) * 1000; // Convert to milliseconds
 
     return {
       price,

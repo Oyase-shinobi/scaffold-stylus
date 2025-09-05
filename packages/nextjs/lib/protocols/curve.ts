@@ -1,6 +1,7 @@
-import { parseAbi, formatUnits } from "viem";
-import { client, CHAIN_ID } from "../client";
-import { CURVE_CONFIG, TOKENS } from "../../config/protocols";
+import { parseAbi } from "viem";
+import { client } from "../client";
+import { CHAIN_ID } from "../../config/protocols";
+import { CURVE_CONFIG } from "../../config/protocols";
 import { Position } from "../../types/positions";
 import { getTokenUSDValue } from "../prices";
 
@@ -24,11 +25,11 @@ const POOL_ABI = parseAbi([
   "function coin_count() view returns (uint256)",
 ]);
 
-// Curve Registry ABI
-const REGISTRY_ABI = parseAbi([
-  "function get_gauge(address pool) view returns (address)",
-  "function get_lp_token(address pool) view returns (address)",
-]);
+// Curve Registry ABI (for future use)
+// const REGISTRY_ABI = parseAbi([
+//   "function get_gauge(address pool) view returns (address)",
+//   "function get_lp_token(address pool) view returns (address)",
+// ]);
 
 export async function getCurvePositions(userAddress: `0x${string}`, prices: Record<string, any>): Promise<Position[]> {
   const positions: Position[] = [];

@@ -1,5 +1,6 @@
-import { parseAbi, formatUnits } from "viem";
-import { client, CHAIN_ID } from "../client";
+import { parseAbi } from "viem";
+import { client } from "../client";
+import { CHAIN_ID } from "../../config/protocols";
 import { UNISWAP_CONFIG, TOKENS } from "../../config/protocols";
 import { Position } from "../../types/positions";
 import { getTokenUSDValue } from "../prices";
@@ -12,21 +13,21 @@ const POSITION_MANAGER_ABI = parseAbi([
   "function collect(uint256 tokenId, address recipient, uint128 amount0Max, uint128 amount1Max) returns (uint256 amount0, uint256 amount1)",
 ]);
 
-// Uniswap v3 Pool ABI
-const POOL_ABI = parseAbi([
-  "function token0() view returns (address)",
-  "function token1() view returns (address)",
-  "function fee() view returns (uint24)",
-  "function slot0() view returns (uint160 sqrtPriceX96, int24 tick, uint16 observationIndex, uint16 observationCardinality, uint16 observationCardinalityNext, uint8 feeProtocol, bool unlocked)",
-  "function liquidity() view returns (uint128)",
-  "function feeGrowthGlobal0X128() view returns (uint256)",
-  "function feeGrowthGlobal1X128() view returns (uint256)",
-]);
+// Uniswap v3 Pool ABI (for future use)
+// const POOL_ABI = parseAbi([
+//   "function token0() view returns (address)",
+//   "function token1() view returns (address)",
+//   "function fee() view returns (uint24)",
+//   "function slot0() view returns (uint160 sqrtPriceX96, int24 tick, uint16 observationIndex, uint16 observationCardinality, uint16 observationCardinalityNext, uint8 feeProtocol, bool unlocked)",
+//   "function liquidity() view returns (uint128)",
+//   "function feeGrowthGlobal0X128() view returns (uint256)",
+//   "function feeGrowthGlobal1X128() view returns (uint256)",
+// ]);
 
-// Uniswap v3 Quoter V2 ABI
-const QUOTER_ABI = parseAbi([
-  "function quoteExactInputSingle(address tokenIn, address tokenOut, uint24 fee, uint256 amountIn, uint160 sqrtPriceLimitX96) view returns (uint256 amountOut, uint160 sqrtPriceX96After, uint32 initializedTicksCrossed, uint256 gasEstimate)",
-]);
+// Uniswap v3 Quoter V2 ABI (for future use)
+// const QUOTER_ABI = parseAbi([
+//   "function quoteExactInputSingle(address tokenIn, address tokenOut, uint24 fee, uint256 amountIn, uint160 sqrtPriceLimitX96) view returns (uint256 amountOut, uint160 sqrtPriceX96After, uint32 initializedTicksCrossed, uint256 gasEstimate)",
+// ]);
 
 export async function getUniswapPositions(
   userAddress: `0x${string}`,
